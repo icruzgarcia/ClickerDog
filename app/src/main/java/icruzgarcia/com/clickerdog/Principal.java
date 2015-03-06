@@ -24,6 +24,7 @@ public class Principal extends ActionBarActivity {
                     .add(R.id.container, new FragmentoPrincipal())
                     .commit();
         }
+
     }
 
 
