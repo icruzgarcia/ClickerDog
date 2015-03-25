@@ -31,7 +31,7 @@ public class FragmentoPrincipal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_principal, container, false);
         clickarDoggy();
-        idleIzar();
+        //idleIzar();
         recogerMejoras();
         return rootView;
     }

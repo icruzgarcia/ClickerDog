@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mejoras extends SQLiteOpenHelper {
     private double modificadorTotal;
@@ -35,7 +37,7 @@ public class Mejoras extends SQLiteOpenHelper {
     public Mejoras(Context context) {
         super(context, NOMBRE_BASEDATOS, null, VERSION);
         this.miContexto = context;
-        DESTINO_DB="/data/data/"+miContexto.getPackageName()+"/"+NOMBRE_BASEDATOS;
+        DESTINO_DB="/data/data/"+miContexto.getPackageName()+"/databases/"+NOMBRE_BASEDATOS;
     }
 
 
@@ -76,7 +78,7 @@ public class Mejoras extends SQLiteOpenHelper {
     public void abrirBase() throws SQLException {
 
             crearBase();
-                miBase=SQLiteDatabase.openDatabase(DESTINO_DB,null,SQLiteDatabase.OPEN_READWRITE);
+             miBase=SQLiteDatabase.openDatabase(DESTINO_DB,null,SQLiteDatabase.OPEN_READWRITE);
 
 
     }
@@ -93,11 +95,28 @@ public class Mejoras extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public List<Mejora> recogerTodo(){
+        SQLiteDatabase db=getReadableDatabase();
+        List<Mejora> lista_mejoras=new ArrayList<>();
+        String []mejora_recuperar={"id","nombre","coste","descripcion","comprada","pasivo"};
+        Cursor c=db.query("mejoras",mejora_recuperar,null,null,null,null,null);
+        c.moveToFirst();
+        do{
+            Mejora mejor=new Mejora(c.getInt(0), c.getString(1), c.getDouble(2), c.getString(3), c.getInt(4), c.getInt(5));
+            lista_mejoras.add(mejor);
+        }while(c.moveToNext());
+        db.close();
+        c.close();
+
+        return lista_mejoras;
+    }
+
     public Mejora recogerModificador(int id) {
         SQLiteDatabase db = getReadableDatabase();
         String[] mejora_recuperar = {"id", "nombre", "coste", "descripcion", "comprada", "pasivo"};
-        Cursor c = null;//miBase.rawQuery("SELECT * from mejoras where id="+id,null);
+        Cursor c =db.query("mejoras", mejora_recuperar, "id=" + id, null, null, null, null, null);
         if (c != null) {
+            Log.d("FUNCIONA","EL CURSOR NO ES NULLO");
             c.moveToFirst();
         }
         Mejora mejora = new Mejora(c.getInt(0), c.getString(1), c.getDouble(2), c.getString(3), c.getInt(4), c.getInt(5));
