@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class PantallaMejoras extends ActionBarActivity {
@@ -53,14 +58,41 @@ public class PantallaMejoras extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        ListView listamejora;
+
+        String[] mejoras={
+                "manzana","pera","melon"
+        };
+        View rootView;
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pantalla_mejoras, container, false);
+            rootView = inflater.inflate(R.layout.fragment_pantalla_mejoras, container, false);
+            listamejora= (ListView) rootView.findViewById(R.id.listaMejoras);
+            //Array adapter se utiliza para recoger los valores para posicionarlos en el listView
+            listamejora.setAdapter(new ArrayAdapter<String>(rootView.getContext(),android.R.layout.simple_list_item_1,mejoras));
+
+            listamejora.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
+
+
+                    Toast.makeText(rootView.getContext(), "mejora hace" + mejoras[position], Toast.LENGTH_SHORT).show();
+                }
+            });
             return rootView;
         }
+       /* public void onListItemClick(ListView parent,View v,int posicion,long id){
+            Toast.makeText(rootView.getContext(), "mejora hace" + mejoras[posicion], Toast.LENGTH_SHORT).show();
+        }*/
     }
+
+
+
 }

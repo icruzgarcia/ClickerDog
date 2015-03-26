@@ -1,5 +1,8 @@
 package icruzgarcia.com.clickerdog;
 
+/*
+* la clase objeto para recibir la información de la base de datos.
+* */
 
 public class Mejora {
 

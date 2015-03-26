@@ -23,7 +23,7 @@ public class FragmentoPrincipal extends Fragment {
     TextView experiencia; //El texto cambiante o mórfico que nos indicará cuanta experiencia llevamos acumulada actualmente
     long experienciaTotal, experienciaClick = 1; // experienciaTotal será la experencia que el textView tenga. El click será la cantidad de experiencia que sumamos por cada click.
     double modificador = 1.0; // modificador será por cuanto se multiplica la experiencia que obtenemos con cada click.
-    double modIdle, experienciaIdle=1; //AUN ESTÁ POR VER SI SE VAN A UTILIZAR. Idle es la experiencia obtenida cuando no hacemos ningún click durante 30 segundos o cuando cerramos el juego.
+    double modIdle, experienciaIdle ; //AUN ESTÁ POR VER SI SE VAN A UTILIZAR. Idle es la experiencia obtenida cuando no hacemos ningún click durante 30 segundos o cuando cerramos el juego.
     //public FragmentoPrincipal() {}
 
 
@@ -31,10 +31,21 @@ public class FragmentoPrincipal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_principal, container, false);
         clickarDoggy();
-        //idleIzar();
+        idleIzar();
+
+        mejoras=(ImageButton)rootView.findViewById(R.id.mejoras);
+        mejoras.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                recogerMejoras();
+            }
+        });
         recogerMejoras();
         return rootView;
     }
+    /*
+    * Este método es la que determina cuanta experiencia se obtendrá cada vez que se haga click a Doggy
+    * */
 
     public void clickarDoggy() {
         doggy = (ImageButton) rootView.findViewById(R.id.perro);
@@ -42,14 +53,16 @@ public class FragmentoPrincipal extends Fragment {
         doggy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                experienciaTotal = experienciaTotal + (long) (experienciaClick /** aplicarModificadores()*/);
+                experienciaTotal = experienciaTotal + (long) (experienciaClick*modificador /** aplicarModificadores()*/);
                 experiencia.setText(Long.toString(experienciaTotal));
             }
         });
 
 
     }
-
+        /*
+        *  Este método permite recoger las mejoras de la base de datos.
+        * */
     public void recogerMejoras(){
         Mejoras mjrs=new Mejoras(rootView.getContext());
         try {
@@ -58,7 +71,11 @@ public class FragmentoPrincipal extends Fragment {
             e.printStackTrace();
         }
         Mejora mejora=mjrs.recogerModificador(1);
-       experiencia.setText(mejora.getNombre());
+            if (mejora.getId()==1){
+                modificador=modificador+1.0;
+
+
+            }
 
     }
 

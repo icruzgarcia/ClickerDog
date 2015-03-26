@@ -10,7 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
-
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
+/*
+* La clase donde se mostrará la pantalla de logros
+* */
 
 public class PantallaLogros extends ActionBarActivity {
 
@@ -53,14 +60,44 @@ public class PantallaLogros extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        GridView gridView;
+        View rootView;
+        final String[] logros = new String[] {
+                "A", "B", "C", "D", "E",
+                "F", "G", "H", "I", "J",
+                "K", "L", "M", "N", "O",
+                "P", "Q", "R", "S", "T",
+                "U", "V", "W", "X", "Y", "Z"
+
+        };
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pantalla_logros, container, false);
+            rootView = inflater.inflate(R.layout.fragment_pantalla_logros, container, false);
+            gridView = (GridView) rootView.findViewById(R.id.gridLogros);
+
+
+            //Array adapter se utiliza para recoger los valores para posicionarlos en el gridview
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, logros);
+
+            gridView.setAdapter(adapter);
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
+
+
+                    Toast.makeText(rootView.getContext(),
+                            ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
             return rootView;
         }
-    }
-}
+    }}
