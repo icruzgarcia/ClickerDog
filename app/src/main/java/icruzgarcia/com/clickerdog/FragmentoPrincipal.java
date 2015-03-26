@@ -14,17 +14,34 @@ import icruzgarcia.com.clickerdog.R;
 
 /**
  * A placeholder fragment containing a simple view.
+ *
+ * @args doggy El boton principal del juego. Al darle conseguiremos experiencia que podremos utilizar para adquirir mejoras
+ * @args mejoras Boton complementario.Mejoras permitirá mejorar nuestra obtención de experiencia.
+ * @args logros Boton complementario. Los logros nos avisarán de nuestras victorias y objetivos conseguidos.
+ * @args opciones Boton complementario. Opciones permitirá guardar, sonido, etc.
+ * @args experiencia El texto cambiante o mórfico que nos indicará cuanta experiencia llevamos acumulada actualmente
+ * @args experienciaTotal La experencia que el textView va a recibir
+ * @args experienciaClick La cantidad de experiencia que se consigue al darle a Doggy un click.
+ * @args modificador La cuantía por la cual se multiplica la experiencia en cada click.
+ * @args experienciaIdle La experiencia cuando no realizamos ningún click.
+ * @args modIdle El modificador por el que se realizará el producto con la experienciaIdle
+ * @args rootView La imagen de la actividad principal.
+ *
  */
+
+
 public class FragmentoPrincipal extends Fragment {
     View rootView;
 
-    ImageButton doggy; //EL boton principal del juego. Al darle conseguiremos experiencia que podremos utilizar para adquirir mejoras
-    ImageButton mejoras, logros, opciones; //Los botones complementarios. Mejoras permitirá mejorar nuestra obtención de experiencia, los logros nos avisarán de nuestras victorias y objetivos conseguidos, opciones permitirá guardar, sonido, etc.
-    TextView experiencia; //El texto cambiante o mórfico que nos indicará cuanta experiencia llevamos acumulada actualmente
-    long experienciaTotal, experienciaClick = 1; // experienciaTotal será la experencia que el textView tenga. El click será la cantidad de experiencia que sumamos por cada click.
-    double modificador = 1.0; // modificador será por cuanto se multiplica la experiencia que obtenemos con cada click.
-    double modIdle, experienciaIdle ; //AUN ESTÁ POR VER SI SE VAN A UTILIZAR. Idle es la experiencia obtenida cuando no hacemos ningún click durante 30 segundos o cuando cerramos el juego.
-    //public FragmentoPrincipal() {}
+
+
+    ImageButton doggy;
+    ImageButton mejoras, logros, opciones;
+    TextView experiencia;
+    long experienciaTotal, experienciaClick = 1;
+    double modificador = 1.0;
+    double modIdle, experienciaIdle=1 ;
+
 
 
     @Override
@@ -43,6 +60,7 @@ public class FragmentoPrincipal extends Fragment {
         recogerMejoras();
         return rootView;
     }
+
     /*
     * Este método es la que determina cuanta experiencia se obtendrá cada vez que se haga click a Doggy
     * */
